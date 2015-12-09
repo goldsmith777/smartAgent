@@ -56,15 +56,16 @@ class Perceptron:
       for i in range(len(self.data)):
         if self.isError(self.data[i]):
           count+=1
+          self.adjust(self.data[i])
           print('No.{0} adjustment...'.format(count))
           print('data:'+str(self.data[i]))
           print('(w,b)=:'+str(self.w)+' '+str(self.b))
-          self.adjust(self.data[i])
           flag = True
           break
         else:
           flag = False
-      if flag:self.visualization(self.w,self.b,count)
+      if flag==True:
+          self.visualization(self.w,self.b,count)
     #返回训练好的模型参数
     return (self.w, self.b, count)
 
@@ -78,7 +79,7 @@ class Perceptron:
     x = np.arange(-3,5,0.1)
     if w[1]!=0:
         y = -float(w[0])*x/float(w[1]) - float(b)/float(w[1])
-        plt.title("No.{0} adjustment...".format(count))
+        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(x,y,'b')
     elif w[1]==0 and w[0]!=0:
         # xline = -b/w[1]
@@ -86,14 +87,14 @@ class Perceptron:
         xline1 = []
         for i in range(len(x)):
             xline1.append(-float(b)/float(w[0]))
-        plt.title("No.{0} adjustment...".format(count))
+        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(xline1,y,'b')
     elif w[0]==0 and w[0]==0:
         y= np.arange(-3,5,0.1)
         xline2=[]
         for i in range(len(x)):
             xline2.append(-2)
-        plt.title("No.{0} adjustment...".format(count))
+        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(xline2,y,'b')
     plt.show()
 
