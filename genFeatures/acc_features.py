@@ -93,26 +93,29 @@ if __name__=='__main__':
     singleAcc =[]
     Act_fact = []
     for line in f.readlines():
+    # 将数据读入allAccWithLabel列表中，并按类别存放在4个子列表中
         line=line.strip().split(" ")
         if '####' in line[0]:
-##            print('tagline')
+            # print('tagline')
             if 'static' in line[0]:
                 classify = 1
             elif 'walk' in line[0]:
                 classify = 2
             elif 'run' in line[0]:
                 classify = 3
-##        elif 'GYRO' in line[3]:
-##           print('GYRO_data')
-##        elif 'GRA' in line[3]:
-##           print('GRA_data')
+        # elif 'GYRO' in line[3]:
+        #       print('GYRO_data')
+        # elif 'GRA' in line[3]:
+        #       print('GRA_data')
         elif 'ACC' in line[3]:
             singleAcc =[float(line[6].strip().split(":")[-1]),float(line[7].strip().split(":")[-1]),float(line[8].strip().split(":")[-1]),classify]
             allAccWithLabel[classify].append(singleAcc)
-    print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
+    # print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
+    # 以上
     accDataSet=[[],[],[],[]]
     temp=[]
     for i in range(4):
+    # 将单次传感器数据组织为15次一组的形式，存放于accDataSet中，形式如：[[[...0]...[...0]],[[...1]...[..1]],[],[]]
         for singleAccData in allAccWithLabel[i]:
             for item in singleAccData[:-1]:
                 temp.append(item)
@@ -122,6 +125,11 @@ if __name__=='__main__':
                     accDataSet[i][-1]= temp
                     temp=[]
     # print accDataSet[1][10][-1],accDataSet[0][10][-1],accDataSet[2][10][-1],len(accDataSet[1][10])
+    # 以上
+    accFeatureXYZ =[[],[],[]]
+    for i in range(4):
+        accDataSetArray=np.array(accDataSet[i])
+        print type(accDataSetArray)
 
 
 
