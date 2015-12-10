@@ -58,7 +58,7 @@ class Perceptron:
           count+=1
           self.adjust(self.data[i])
           print('No.{0} adjustment...'.format(count))
-          print('data:'+str(self.data[i]))
+          print('Error data:'+str(self.data[i]))
           print('(w,b)=:'+str(self.w)+' '+str(self.b))
           flag = True
           break

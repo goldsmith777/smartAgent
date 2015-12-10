@@ -109,48 +109,63 @@ if __name__=='__main__':
         elif 'ACC' in line[3]:
             singleAcc =[float(line[6].strip().split(":")[-1]),float(line[7].strip().split(":")[-1]),float(line[8].strip().split(":")[-1]),classify]
             allAccWithLabel[classify].append(singleAcc)
-        # AccXYZ = np.array(allAccWithLabel)
+    print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
+    accDataSet=[[],[],[],[]]
+    temp=[]
     for i in range(4):
-        print len(allAccWithLabel[i])
-
-
-
-        
-##        num = float(AccXYZ.shape[1])
-
-            ##            print singleAcc
-            # for Accxyz in Acc:
-            #     Accxyz=Accxyz.split(",")
-            #     if len(Accxyz) == 3:
-            #         AccXYZ[0].append(float(Accxyz[0]))
-            #         AccXYZ[1].append(float(Accxyz[1]))
-            #         AccXYZ[2].append(float(Accxyz[2]))
-            # AccXYZ = np.array(AccXYZ)
-            # num = float(AccXYZ.shape[1])
-            # print('ACC_data')
-    # print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
-    # print allAccWithLabel[0]
+        for singleAccData in allAccWithLabel[i]:
+            for item in singleAccData[:-1]:
+                temp.append(item)
+                if len(temp)>=45:
+                    temp.append(i)
+                    accDataSet[i].append('')
+                    accDataSet[i][-1]= temp
+                    temp=[]
+    # print accDataSet[1][10][-1],accDataSet[0][10][-1],accDataSet[2][10][-1],len(accDataSet[1][10])
 
 
 
 
-    # eigen_fact_matrix = filedata(filename)
 
-    # filename1='D:/SmartAgent/Data/LenovoSportCollectData_feature.txt'
-    # f1=open(filename1,'w')
-    # dataSet = eigen_fact_matrix[:,15:]
-    # for i in dataSet:
-    #     f1.write(str(list(i))+'\n')
-    # f1.close()
+    # accDatasetWithLabel = np.array(allAccWithLabel)
+    # for i in range(4):
+    #     print len(allAccWithLabel[i])
+    # else:
+    #         AccXYZ =[[],[],[]]
+    #         Acc = line[-1].split("*")
+    #         for Accxyz in Acc:
+    #             Accxyz=Accxyz.split(",")
+    #             if len(Accxyz) == 3:
+    #                 AccXYZ[0].append(float(Accxyz[0]))
+    #                 AccXYZ[1].append(float(Accxyz[1]))
+    #                 AccXYZ[2].append(float(Accxyz[2]))
+    #         AccXYZ = np.array(AccXYZ)
+    #         num = float(AccXYZ.shape[1])
+    #         df = DataFrame(AccXYZ)
+    #         skew = df.skew(1) #偏度
+    #         kurt = df.kurt(1) #峰度
+    #         mean = AccXYZ.mean(1)#均值
+    #         std = AccXYZ.std(1)#标准差
+    #         fft = np.fft.fft(AccXYZ)#傅里叶
+    #         pass_mean = passmean(AccXYZ,mean)/num#均值穿越次数
+    #         eigen_choose1 = np.append(np.array(skew),np.array(kurt))
+    #         eigen_choose2= np.append(mean,pass_mean)
+    #         eigen_choose3= np.append(std,pow(abs(fft),2).sum(1)/num)
+    #         eigen_choose12 = np.append(eigen_choose1,eigen_choose2)
+    #         eigen_choose = np.append(eigen_choose12,eigen_choose3)
+    #     if  'ACT' in line[0] :
+    #         Act = line[-1].split(",")
+    #         eigen_choose = np.append(eigen_choose,int(Act[-1]))
+    #         eigen_list.append(list(eigen_choose))
+    # f.close()
+    # eigen_fact_matrix = avg_data(eigen_list)
+    # return eigen_fact_matrix
     #
-    # filename2='D:/sensor_data/dataset_606666/606666/CenceMeRawData2/std_data7.txt'
-    # f2=open(filename2,'w')
-    # dataSet = eigen_fact_matrix[:,[12,13,14,-1]]
-    # for i in dataSet:
-    #     f2.write(str(list(i))+'\n')
-    # f2.close()
 
-    #
+
+
+
+
     # filename3='D:/sensor_data/dataset_606666/606666/CenceMeRawData4/std_en_data15.txt'
     # f3=open(filename3,'w')
     # dataSet = eigen_fact_matrix[:,12:]
