@@ -79,7 +79,7 @@ class Perceptron:
     x = np.arange(-3,5,0.1)
     if w[1]!=0:
         y = -float(w[0])*x/float(w[1]) - float(b)/float(w[1])
-        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
+        plt.title("No.{0} adjustment, {1}x1+{2}x2+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(x,y,'b')
     elif w[1]==0 and w[0]!=0:
         # xline = -b/w[1]
@@ -87,14 +87,14 @@ class Perceptron:
         xline1 = []
         for i in range(len(x)):
             xline1.append(-float(b)/float(w[0]))
-        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
+        plt.title("No.{0} adjustment, {1}x1+{2}x2+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(xline1,y,'b')
     elif w[0]==0 and w[0]==0:
         y= np.arange(-3,5,0.1)
         xline2=[]
         for i in range(len(x)):
-            xline2.append(-2)
-        plt.title("No.{0} adjustment, {1}x+{2}y+{3}=0....".format(count,w[0],w[1],b))
+            xline2.append(b)
+        plt.title("No.{0} adjustment, {1}x1+{2}x2+{3}=0....".format(count,w[0],w[1],b))
         plt.plot(xline2,y,'b')
     plt.show()
 
@@ -121,7 +121,7 @@ class Perceptron:
 	
   @staticmethod
   def vtimesi(vector,n):
-    # 返回
+    # 返回列表
     return [vector[t]*n for t in range(len(vector))]
 
 
@@ -133,8 +133,10 @@ if __name__=='__main__':
     #线性不可分，导致死循环
     #data = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1],[2,2,1],[3,1,-1]]
     # data1 = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1],[2,2,-1],[3,1,-1]]
-    data2 = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1]]
-    p = Perceptron(0.3,[1,1],0,data2)
+    data2 = [[3,3,1],[4,3,1],[1,1,-1]]
+    data2_= [[3,3,-1],[4,3,-1],[1,1,1]]
+    data3 = [[0,0,-1],[0,1,-1],[1,0,-1],[1,1,1]]
+    p = Perceptron(1,[1,1],0,data2)
     answer = p.train()
     print('-'*60)
     print('answer'+str(answer))

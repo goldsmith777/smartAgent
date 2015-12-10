@@ -51,8 +51,8 @@ def filedata(filename):
     for line in f.readlines():
         line=line.strip().split(" ")
         if '#' in line[0]:
-            break
-        elif:
+            print(' ')
+        else:
             AccXYZ =[[],[],[]]
             Acc = line[-1].split("*")
             for Accxyz in Acc:
@@ -87,20 +87,50 @@ def filedata(filename):
 if __name__=='__main__':
     filename = 'D:/SmartAgent/Data/LenovoSportCollectData.txt'
     f=open(filename,'r')
-    eigen_list = []
+    classify = 0
+    count=0
+    allAccWithLabel = [[],[],[],[]]
+    singleAcc =[]
     Act_fact = []
     for line in f.readlines():
         line=line.strip().split(" ")
-        if 'static mode' in line[0]:
-            print('tagline')
-        elif 'GYRO' in line[3]:
-            print('GYRO_data')
+        if '####' in line[0]:
+##            print('tagline')
+            if 'static' in line[0]:
+                classify = 1
+            elif 'walk' in line[0]:
+                classify = 2
+            elif 'run' in line[0]:
+                classify = 3
+##        elif 'GYRO' in line[3]:
+##           print('GYRO_data')
+##        elif 'GRA' in line[3]:
+##           print('GRA_data')
         elif 'ACC' in line[3]:
-            AccXYZ =[[],[],[]]
+            singleAcc =[float(line[6].strip().split(":")[-1]),float(line[7].strip().split(":")[-1]),float(line[8].strip().split(":")[-1]),classify]
+            allAccWithLabel[classify].append(singleAcc)
+        # AccXYZ = np.array(allAccWithLabel)
+    for i in range(4):
+        print len(allAccWithLabel[i])
 
-            print('ACC_data')
-        elif 'GRA' in line[3]:
-            print('GRA_data')
+
+
+        
+##        num = float(AccXYZ.shape[1])
+
+            ##            print singleAcc
+            # for Accxyz in Acc:
+            #     Accxyz=Accxyz.split(",")
+            #     if len(Accxyz) == 3:
+            #         AccXYZ[0].append(float(Accxyz[0]))
+            #         AccXYZ[1].append(float(Accxyz[1]))
+            #         AccXYZ[2].append(float(Accxyz[2]))
+            # AccXYZ = np.array(AccXYZ)
+            # num = float(AccXYZ.shape[1])
+            # print('ACC_data')
+    # print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
+    # print allAccWithLabel[0]
+
 
 
 
