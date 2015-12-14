@@ -44,7 +44,7 @@ class Perceptron:
     self.b = self.b + self.eta * x[-1]
     return
 	
-  def train(self):
+  def train_visual(self):
     #开始训练数据
     #获得数据个数
     flag=True
@@ -69,6 +69,31 @@ class Perceptron:
     #返回训练好的模型参数
     return (self.w, self.b, count)
 
+  def train(self):
+    #开始训练数据
+    #获得数据个数
+    flag=True
+    count=0
+    print('-'*30)
+    print('initialing...')
+    # self.visualization(self.w,self.b,count)
+    while flag:
+      for i in range(len(self.data)):
+        if self.isError(self.data[i]):
+          count+=1
+          self.adjust(self.data[i])
+          print('--->No.{0} adjustment(Error data:{1},classifier={2}'.format(count,str(self.data[i]),str(self.w)+' '+str(self.b)))
+          # print('Error data:'+str(self.data[i]))
+          # print('(w,b)=:'+str(self.w)+' '+str(self.b))
+          flag = True
+          break
+        else:
+          flag = False
+      # if flag==True:
+      #     self.visualization(self.w,self.b,count)
+    #返回训练好的模型参数
+    return (self.w, self.b, count)
+
   def visualization(self, w, b, count):
     # 用于画图，包括分类的样本点和线段
     for i in range(len(self.data)):
@@ -88,14 +113,14 @@ class Perceptron:
         for i in range(len(x)):
             xline1.append(-float(b)/float(w[0]))
         plt.title("No.{0} adjustment, {1}x1+{2}x2+{3}=0....".format(count,w[0],w[1],b))
-        plt.plot(xline1,y,'b')
+        plt.plot(xline1,y,'*b')
     elif w[0]==0 and w[0]==0:
         y= np.arange(-3,5,0.1)
         xline2=[]
         for i in range(len(x)):
             xline2.append(b)
         plt.title("No.{0} adjustment, {1}x1+{2}x2+{3}=0....".format(count,w[0],w[1],b))
-        plt.plot(xline2,y,'b')
+        plt.plot(xline2,y,'*r')
     plt.show()
 
 
@@ -126,17 +151,17 @@ class Perceptron:
 
 
 if __name__=='__main__':
-    #书上的原始数据
-    #data = [[3,3,1],[4,3,1],[1,1,-1]]
-    #线性可分的测试数据
-    #data = [[3,3,1],[4,3,1],[1,1,-1],[2,2,-1],[5,4,1],[1,3,-1]]
-    #线性不可分，导致死循环
-    #data = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1],[2,2,1],[3,1,-1]]
-    # data1 = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1],[2,2,-1],[3,1,-1]]
-    data2 = [[3,3,1],[4,3,1],[1,1,-1]]
-    data2_= [[3,3,-1],[4,3,-1],[1,1,1]]
-    data3 = [[0,0,-1],[0,1,-1],[1,0,-1],[1,1,1]]
-    p = Perceptron(1,[1,1],0,data2)
+    # 简单数据集
+    data1 = [[3,3,1],[4,3,1],[1,1,-1]]
+    data2 = [[3,3,-1],[4,3,1],[1,1,-1]]
+    # 复杂数据集
+    data3 = [[3,3,1],[4,3,1],[1,1,-1],[1,3,-1],[2,2,-1],[3,1,-1]]
+    # 不可分数据集
+    data4 = [[3,3,1],[4,3,-1],[1,1,-1],[1,0,1]]
+    # 逻辑或
+    data5 = [[0,0,-1],[0,1,1],[1,0,1],[1,1,1]]
+    p = Perceptron(1,[1,1],1,data4)
+    # answer = p.train_visual()
     answer = p.train()
     print('-'*60)
     print('answer'+str(answer))

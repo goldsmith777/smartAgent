@@ -97,6 +97,8 @@ if __name__=='__main__':
         line=line.strip().split(" ")
         if '####' in line[0]:
             # print('tagline')
+            if 'Default' in line[0]:
+                classify = 0
             if 'static' in line[0]:
                 classify = 1
             elif 'walk' in line[0]:
@@ -110,7 +112,7 @@ if __name__=='__main__':
         elif 'ACC' in line[3]:
             singleAcc =[float(line[6].strip().split(":")[-1]),float(line[7].strip().split(":")[-1]),float(line[8].strip().split(":")[-1]),classify]
             allAccWithLabel[classify].append(singleAcc)
-    # print len(allAccWithLabel[0]),len(allAccWithLabel[1]),len(allAccWithLabel[2]),len(allAccWithLabel[3])
+    # print allAccWithLabel[0][5],allAccWithLabel[1][6],len(allAccWithLabel[2]),len(allAccWithLabel[3])
     # 以上
     accDataSet=[[],[],[],[]]
     temp=[]
@@ -121,15 +123,27 @@ if __name__=='__main__':
                 temp.append(item)
                 if len(temp)>=45:
                     temp.append(i)
-                    accDataSet[i].append('')
-                    accDataSet[i][-1]= temp
+                    accDataSet[i].append(temp)
                     temp=[]
-    # print accDataSet[1][10][-1],accDataSet[0][10][-1],accDataSet[2][10][-1],len(accDataSet[1][10])
+    # print accDataSet[0][0],len(accDataSet[0][0]),len(accDataSet[2]),len(accDataSet[1][10])
     # 以上
-    accFeatureXYZ =[[],[],[]]
+
+    accFeatureXYZ =[]
+    tempXYZ =[[],[],[]]
     for i in range(4):
-        accDataSetArray=np.array(accDataSet[i])
-        print type(accDataSetArray)
+        accFeatureXYZ.append([])
+        for item in accDataSet[i]:
+            accDataSetArray=np.array(item[:-1]).reshape(15,3)
+            mean=accDataSetArray.T.mean(1)
+            tempXYZ[i].append(mean)
+            print tempXYZ[i]
+
+            # accFeatureXYZ.append(mean)
+            # tempXYZ[0]=accDataSetArray[:,0]
+            # tempXYZ[1]=accDataSetArray[:,1]
+            # tempXYZ[2]=accDataSetArray[:,2]
+            # print tempXYZ
+
 
 
 
